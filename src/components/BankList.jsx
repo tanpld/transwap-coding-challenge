@@ -5,7 +5,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Type from "prop-types";
 import Bank from "./Bank";
 
-const useRowStyles = makeStyles({
+const useRowStyles = makeStyles((theme) => ({
   header: {
     display: "flex",
     padding: "0px 16px",
@@ -16,8 +16,9 @@ const useRowStyles = makeStyles({
   status: {
     display: "flex",
     alignItems: "center",
-    "@media (min-width: 600px)": {
-      paddingRight: "24px",
+    paddingRight: "24px",
+    [theme.breakpoints.down("xs")]: {
+      paddingRight: "unset",
     },
   },
   statusHead: {
@@ -29,6 +30,9 @@ const useRowStyles = makeStyles({
     minWidth: "125px",
     fontWeight: "bold",
     color: "rgba(0, 0, 0, 0.54)",
+    [theme.breakpoints.down("xs")]: {
+      minWidth: "80px",
+    },
   },
   bankName: {
     fontSize: "12px",
@@ -36,7 +40,7 @@ const useRowStyles = makeStyles({
     color: "#0070ff",
     fontWeight: "bold",
   },
-});
+}));
 
 function BankList({ data }) {
   const style = useRowStyles();
