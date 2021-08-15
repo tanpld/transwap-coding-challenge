@@ -44,6 +44,9 @@ const useStyles = makeStyles({
     height: "100%",
     position: "absolute",
     backgroundColor: "rgba(255, 255, 255, 0.2)",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   img: {
     width: "100%",
@@ -70,7 +73,7 @@ function Country(props) {
       className={clsx(style.paper, { selected: isSelected })}
       onClick={onClick(id)}
     >
-      <CheckIcon className={style.checkIcon}/>
+      {isSelected && <CheckIcon className={style.checkIcon}/>}
       {isComing && (
         <div className={style.overlay}>
           <Chip label="Coming soon..." />
