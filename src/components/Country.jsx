@@ -3,10 +3,11 @@ import clsx from "clsx";
 import { Paper, Typography, Chip } from "@material-ui/core";
 import Type from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import CheckIcon from '@material-ui/icons/Check';
+import CheckIcon from "@material-ui/icons/Check";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(() => ({
   paper: {
+    cursor: ({ data }) => (data?.isComing ? "auto" : "pointer"),
     border: "solid 1px #CED0D6",
     borderRadius: "8px",
     position: "relative",
@@ -14,8 +15,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: "2rem",
-    overflow: 'hidden',
+    padding: "4rem",
+    overflow: "hidden",
     "&.selected": {
       borderColor: "#5954E9",
       "&:after": {
@@ -27,59 +28,58 @@ const useStyles = makeStyles({
         width: "60px",
         height: "60px",
         transform: "rotate(45deg)",
-        backgroundColor: '#5954E9',
+        backgroundColor: "#5954E9",
       },
     },
+    transition: '0.25s',
   },
   checkIcon: {
-    position: 'absolute',
-    top: '5px',
-    left: '5px',
+    position: "absolute",
+    top: "5px",
+    left: "5px",
     zIndex: 1,
-    color: '#fff',
-    fontSize: '16px',
+    color: "#fff",
+    fontSize: "16px",
   },
   overlay: {
     width: "100%",
     height: "100%",
     position: "absolute",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   img: {
-    width: "100%",
+    height: "100%",
   },
   name: {
     marginTop: "0.5rem",
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
-});
+  chip: {
+    backgroundColor: "#555",
+    color: "#fff",
+  },
+}));
 
 function Country(props) {
-  const {
-    onClick = () => {},
-    isSelected,
-    id,
-    name,
-    isComing,
-    thumbnailUrl,
-  } = props;
-  const style = useStyles();
+  const { onClick, isSelected, data } = props;
+  const { name, isComing, thumbnailUrl } = data;
+  const style = useStyles(props);
   return (
     <Paper
       variant="outlined"
       className={clsx(style.paper, { selected: isSelected })}
-      onClick={onClick(id)}
+      onClick={() => onClick(data)}
     >
-      {isSelected && <CheckIcon className={style.checkIcon}/>}
+      {isSelected && <CheckIcon className={style.checkIcon} />}
       {isComing && (
         <div className={style.overlay}>
-          <Chip label="Coming soon..." />
+          <Chip label="Coming soon..." className={style.chip} />
         </div>
       )}
-      <img className={style.img} src={thumbnailUrl} alt={`Country ${name}`} />
+      <img className={style.img} src={thumbnailUrl} alt={`country-${name}`} />
       <Typography className={style.name}>{name}</Typography>
     </Paper>
   );
@@ -87,10 +87,12 @@ function Country(props) {
 
 Country.propTypes = {
   isSelected: Type.bool,
-  id: Type.string.isRequired,
-  name: Type.string.isRequired,
-  isComing: Type.bool,
-  thumbnailUrl: Type.string,
+  data: Type.shape({
+    id: Type.number.isRequired,
+    name: Type.string.isRequired,
+    isComing: Type.bool,
+    thumbnailUrl: Type.string,
+  }),
 };
 
 export default Country;

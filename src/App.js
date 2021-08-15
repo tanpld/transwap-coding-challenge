@@ -1,10 +1,12 @@
-import CountrySelection from './components/CountrySelection';
+import CountrySelection from "./components/CountrySelection";
+import { QueryClient, QueryClientProvider } from "react-query";
 
+const queryClient = new QueryClient();
 function App() {
   return (
-    <div className="App" style={{ backgroundColor: '#F2F3FA'}}>
+    <QueryClientProvider client={queryClient}>
       <CountrySelection />
-    </div>
+    </QueryClientProvider>
   );
 }
 

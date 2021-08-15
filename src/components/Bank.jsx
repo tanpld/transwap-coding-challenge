@@ -6,9 +6,12 @@ import {
   AccordionSummary as MuiAccordionSummary,
   AccordionDetails as MuiAccordionDetails,
   Typography,
+  Button,
 } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { useQuery } from "react-query";
+import CallIcon from "@material-ui/icons/Call";
 
 const useStyles = makeStyles({
   root: {
@@ -23,10 +26,10 @@ const useStyles = makeStyles({
     borderRadius: "16px",
   },
   status: {
-    textAlign: 'center',
-    boxSizing:'border-box',
-    minWidth: '125px',
-    fontWeight: '500',
+    textAlign: "center",
+    boxSizing: "border-box",
+    minWidth: "125px",
+    fontWeight: "500",
     display: "inline-block",
     borderRadius: "4px",
     padding: "10px 32px",
@@ -35,6 +38,17 @@ const useStyles = makeStyles({
     "&.active": {
       backgroundColor: "#00bd06",
     },
+  },
+  bankLogo: {
+    width: "300px",
+    marginBottom: "8px",
+  },
+  bankName: {
+    fontWeight: "bold",
+    margin: "32px 0",
+  },
+  callIcon: {
+    color: "blue",
   },
 });
 
@@ -77,7 +91,7 @@ const AccordionSummary = withStyles({
     "&.Mui-expanded": {
       margin: "12px 0",
     },
-    paddingRight: '24px',
+    paddingRight: "24px",
   },
 })(MuiAccordionSummary);
 
@@ -89,13 +103,24 @@ const AccordionDetails = withStyles({
     borderTopLeftRadius: "2px",
     borderTopRightRadius: "2px",
     backgroundColor: "#fff",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
 })(MuiAccordionDetails);
 
 function Bank(props) {
-  const { id, name = "Bank of Vietnam", isActive } = props;
+  const { data } = props;
+  const { id, name, isActive } = data;
   const style = useStyles();
-  // fetch data
+  const {
+    data: bankDetails,
+  } = useQuery(["bankDetails", id], () =>
+    fetch(
+      `https://my-json-server.typicode.com/fred-ng/transwap-coding-challenge/banks/${id}`
+    ).then((res) => res.json())
+  );
+
   return (
     <Accordion component="div">
       <AccordionSummary
@@ -111,16 +136,32 @@ function Bank(props) {
         </div>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography>Detail go here...</Typography>
+        <Typography className={style.bankName} variant="h5" component="h3">
+          {bankDetails?.name}
+        </Typography>
+        <img
+          className={style.bankLogo}
+          src={bankDetails?.logoUrl}
+          alt={`${bankDetails?.name}-logo`}
+        />
+        {bankDetails?.hotline && (
+          <Button startIcon={<CallIcon className={style.callIcon} />}>
+            <a href={`tel:${bankDetails.hotline}`}>
+              <i>{bankDetails.hotline}</i>
+            </a>
+          </Button>
+        )}
       </AccordionDetails>
     </Accordion>
   );
 }
 
 Bank.propsTypes = {
-  id: Type.string.isRequired,
-  name: Type.string.isRequired,
-  isActive: Type.bool,
+  data: Type.shape({
+    id: Type.string.isRequired,
+    name: Type.string.isRequired,
+    isActive: Type.bool,
+  }),
 };
 
 export default Bank;
