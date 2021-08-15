@@ -10,8 +10,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { useQuery } from "react-query";
 import CallIcon from "@material-ui/icons/Call";
+import useGetBankDetails from "../queries/useGetBankDetails";
 
 const useStyles = makeStyles({
   root: {
@@ -113,13 +113,7 @@ function Bank(props) {
   const { data } = props;
   const { id, name, isActive } = data;
   const style = useStyles();
-  const {
-    data: bankDetails,
-  } = useQuery(["bankDetails", id], () =>
-    fetch(
-      `https://my-json-server.typicode.com/fred-ng/transwap-coding-challenge/banks/${id}`
-    ).then((res) => res.json())
-  );
+  const { data: bankDetails, isError, isLoading } = useGetBankDetails(id);
 
   return (
     <Accordion component="div">
