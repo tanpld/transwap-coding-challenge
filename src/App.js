@@ -1,5 +1,4 @@
 import Country from './components/Country';
-
 function App() {
   return (
     <div className="App">
