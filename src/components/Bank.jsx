@@ -13,7 +13,7 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import CallIcon from "@material-ui/icons/Call";
 import useGetBankDetails from "../queries/useGetBankDetails";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     borderRadius: "8px",
     border: "0",
@@ -38,10 +38,18 @@ const useStyles = makeStyles({
     "&.active": {
       backgroundColor: "#00bd06",
     },
+    [theme.breakpoints.down("xs")]: {
+      marginTop: '8px',
+      padding: "5px 10px",
+      minWidth: "80px",
+    },
   },
   bankLogo: {
     width: "300px",
     marginBottom: "8px",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+    },
   },
   bankName: {
     fontWeight: "bold",
@@ -50,7 +58,7 @@ const useStyles = makeStyles({
   callIcon: {
     color: "blue",
   },
-});
+}));
 
 const Accordion = withStyles({
   root: {
@@ -91,7 +99,9 @@ const AccordionSummary = withStyles({
     "&.Mui-expanded": {
       margin: "12px 0",
     },
-    paddingRight: "24px",
+    "@media (min-width: 600px)": {
+      paddingRight: "24px",
+    },
   },
 })(MuiAccordionSummary);
 
@@ -116,14 +126,14 @@ function Bank(props) {
   const { data: bankDetails, isError, isLoading } = useGetBankDetails(id);
 
   return (
-    <Accordion component="div">
+    <Accordion>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls={`${name}-content`}
         id={`${name}-header`}
       >
         <div className={style.sumary}>
-          <Typography component="div">{name}</Typography>
+          <Typography>{name}</Typography>
           <span className={clsx(style.status, { active: isActive })}>
             {isActive ? "Active" : "Inactive"}
           </span>

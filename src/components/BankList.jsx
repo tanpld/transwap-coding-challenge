@@ -14,6 +14,13 @@ const useRowStyles = makeStyles({
     alignItems: "center",
   },
   status: {
+    display: "flex",
+    alignItems: "center",
+    "@media (min-width: 600px)": {
+      paddingRight: "24px",
+    },
+  },
+  statusHead: {
     display: "inline-block",
     padding: "8px 16px",
     backgroundColor: "transparent",
@@ -39,8 +46,8 @@ function BankList({ data }) {
         <Button className={style.bankName} endIcon={<ExpandMoreIcon />}>
           Bank name
         </Button>
-        <Box display="flex" alignItems="center" paddingRight="24px">
-          <Typography className={style.status} variant="caption">
+        <Box className={style.status}>
+          <Typography className={style.statusHead} variant="caption">
             Status
           </Typography>
           <Box width="48px" height="48px" marginRight="-12px" />

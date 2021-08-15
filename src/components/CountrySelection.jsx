@@ -5,16 +5,19 @@ import Country from "./Country";
 import BankList from "./BankList";
 import useGetCountries from "../queries/useGetCountries";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   container: {
     padding: "32px",
     backgroundColor: "#F2F3FA",
+    [theme.breakpoints.down("xs")]: {
+      padding: "16px",
+    },
   },
   title: {
     fontWeight: "bold",
     marginBottom: "2rem",
   },
-});
+}));
 
 function CountrySelection() {
   const style = useStyles();
@@ -37,7 +40,13 @@ function CountrySelection() {
       <Box marginTop="1.5rem">
         <Grid container spacing={3}>
           {countries?.map((country) => (
-            <Grid item xs={12} md={4} key={`${country?.id}-${country.name}`}>
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              key={`${country?.id}-${country.name}`}
+            >
               <Country
                 data={country}
                 isSelected={country.id === selectedCountry?.id}
