@@ -7,7 +7,6 @@ import {
   AccordionDetails as MuiAccordionDetails,
   Typography,
   Button,
-  Box,
 } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";

@@ -4,7 +4,6 @@ import { Paper, Typography, Chip } from "@material-ui/core";
 import Type from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
-import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles(() => ({
   paper: {
