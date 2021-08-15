@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Country from "./Country";
 import BankList from "./BankList";
 import useGetCountries from "../queries/useGetCountries";
+import { Skeleton } from "@material-ui/lab";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 function CountrySelection() {
   const style = useStyles();
   const [selectedCountry, setCountry] = useState();
-  const { data: countries, isError, isLoading } = useGetCountries();
+  const { data: countries, isLoading } = useGetCountries();
 
   const handleSelectCountry = (data) => {
     if (data?.isComing) return;
@@ -39,6 +40,21 @@ function CountrySelection() {
       </Typography>
       <Box marginTop="1.5rem">
         <Grid container spacing={3}>
+          {isLoading && (
+            <>
+              {new Array(6).fill("country", 0, 6).map((item) => (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  key={item}
+                >
+                  <Skeleton variant="rect" animation="pulse" height={222} style={{ borderRadius: '8px'}} />
+                </Grid>
+              ))}
+            </>
+          )}
           {countries?.map((country) => (
             <Grid
               item
@@ -51,6 +67,7 @@ function CountrySelection() {
                 data={country}
                 isSelected={country.id === selectedCountry?.id}
                 onClick={handleSelectCountry}
+                isLoading={isLoading}
               />
             </Grid>
           ))}
