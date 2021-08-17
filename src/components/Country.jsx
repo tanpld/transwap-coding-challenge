@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import { Paper, Typography, Chip } from "@material-ui/core";
+import { Paper, Typography, Chip, Fade } from "@material-ui/core";
 import Type from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import CheckIcon from "@material-ui/icons/Check";
@@ -19,19 +19,18 @@ const useStyles = makeStyles(() => ({
     overflow: "hidden",
     "&.selected": {
       borderColor: "#5954E9",
-      "&:after": {
-        content: "''",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        margin: "-30px",
-        width: "60px",
-        height: "60px",
-        transform: "rotate(45deg)",
-        backgroundColor: "#5954E9",
-      },
     },
     transition: "0.25s",
+  },
+  checkCorner: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    margin: "-30px",
+    width: "60px",
+    height: "60px",
+    transform: "rotate(45deg)",
+    backgroundColor: "#5954E9",
   },
   checkIcon: {
     position: "absolute",
@@ -51,7 +50,7 @@ const useStyles = makeStyles(() => ({
     alignItems: "center",
   },
   img: {
-    height: "100%",
+    height: "64px",
   },
   name: {
     marginTop: "0.5rem",
@@ -73,7 +72,12 @@ function Country(props) {
       className={clsx(style.paper, { selected: isSelected })}
       onClick={() => onClick(data)}
     >
-      {isSelected && <CheckIcon className={style.checkIcon} />}
+      <Fade in={isSelected}>
+        <div className={style.checkCorner} />
+      </Fade>
+      <Fade in={isSelected}>
+        <CheckIcon className={style.checkIcon} />
+      </Fade>
       {isComing && (
         <div className={style.overlay}>
           <Chip label="Coming soon..." className={style.chip} />

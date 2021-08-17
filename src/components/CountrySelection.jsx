@@ -42,13 +42,13 @@ function CountrySelection() {
         <Grid container spacing={3}>
           {isLoading && (
             <>
-              {new Array(6).fill("country", 0, 6).map((item) => (
+              {new Array(6).fill("country", 0, 6).map((item, index) => (
                 <Grid
                   item
                   xs={12}
                   sm={6}
                   md={4}
-                  key={item}
+                  key={`${item}-${index}`}
                 >
                   <Skeleton variant="rect" animation="pulse" height={222} style={{ borderRadius: '8px'}} />
                 </Grid>
