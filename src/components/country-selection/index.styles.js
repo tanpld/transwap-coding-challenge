@@ -2,11 +2,12 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    position: "relative",
     padding: "32px",
-    backgroundColor: "#F2F3FA",
     [theme.breakpoints.down("xs")]: {
       padding: "16px",
     },
+    height: "100vh",
   },
   title: {
     fontWeight: "bold",

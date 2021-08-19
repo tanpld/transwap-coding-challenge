@@ -21,7 +21,7 @@ function BankList({ data }) {
         </Box>
       </div>
       {data?.map((bank) => (
-        <Bank key={bank.id} data={bank} />
+        <Bank key={`${bank.id}-${bank.name}`} data={bank} />
       ))}
     </>
   );
