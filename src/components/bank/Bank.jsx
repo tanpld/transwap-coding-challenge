@@ -67,7 +67,7 @@ function Bank(props) {
 
 Bank.propsTypes = {
   data: Type.shape({
-    id: Type.string.isRequired,
+    id: Type.number.isRequired,
     name: Type.string.isRequired,
     isActive: Type.bool,
   }),

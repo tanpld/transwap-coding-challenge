@@ -46,7 +46,7 @@ function BankList({ data }) {
 BankList.propTypes = {
   data: Type.arrayOf(
     Type.shape({
-      id: Type.string.isRequired,
+      id: Type.number.isRequired,
       name: Type.string.isRequired,
       isActive: Type.bool,
     })
