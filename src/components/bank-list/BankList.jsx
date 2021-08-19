@@ -1,22 +1,57 @@
-import React from "react";
-import { Typography, Box, Button } from "@material-ui/core";
+import React, { useState } from "react";
+import { Box, Button } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Type from "prop-types";
+import clsx from "clsx";
 import Bank from "../bank/Bank";
-import useStyles from './index.styles';
+import useStyles from "./index.styles";
 
 function BankList({ data }) {
-  const style = useStyles();
+  const [order, setOrder] = useState({ field: "name", order: "ASC" });
+  const style = useStyles(order);
+  const handleClickTableHead = (field) => {
+    if (field === order.field) {
+      setOrder((prevOrder) => ({
+        ...prevOrder,
+        order: order.order === "ASC" ? "DESC" : "ASC",
+      }));
+    }
+    setOrder((prevOrder) => ({ ...prevOrder, field }));
+  };
   return (
     <>
       <div className={style.header}>
-        <Button className={style.bankName} endIcon={<ExpandMoreIcon />}>
+        <Button
+          className={clsx(style.tableHead, { active: order.field === "name" })}
+          endIcon={
+            <ExpandMoreIcon
+              className={clsx(style.sortIcon, {
+                active: order.field === "name",
+                orderASC: order.field === "name" && order.order === "ASC",
+              })}
+            />
+          }
+          onClick={() => handleClickTableHead("name")}
+        >
           Bank name
         </Button>
         <Box className={style.status}>
-          <Typography className={style.statusHead} variant="caption">
+          <Button
+            className={clsx(style.tableHead, {
+              active: order.field === "status",
+            })}
+            endIcon={
+              <ExpandMoreIcon
+                className={clsx(style.sortIcon, {
+                  active: order.field === "status",
+                  orderASC: order.field === "status" && order.order === "ASC",
+                })}
+              />
+            }
+            onClick={() => handleClickTableHead("status")}
+          >
             Status
-          </Typography>
+          </Button>
           <Box width="48px" height="48px" marginRight="-12px" />
         </Box>
       </div>
