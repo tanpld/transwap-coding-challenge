@@ -1,15 +1,14 @@
 import React, { useState } from "react";
-import { Box, Button } from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Box } from "@material-ui/core";
 import Type from "prop-types";
-import clsx from "clsx";
 import Bank from "../bank/Bank";
 import useStyles from "./index.styles";
+import TableHeadCell from "./TableHeadCell";
 
 function BankList({ data }) {
   const [order, setOrder] = useState({ field: "name", order: "ASC" });
   const style = useStyles(order);
-  const handleClickTableHead = (field) => {
+  const handleClickTableHeadCell = (field) => {
     if (field === order.field) {
       setOrder((prevOrder) => ({
         ...prevOrder,
@@ -21,37 +20,19 @@ function BankList({ data }) {
   return (
     <>
       <div className={style.header}>
-        <Button
-          className={clsx(style.tableHead, { active: order.field === "name" })}
-          endIcon={
-            <ExpandMoreIcon
-              className={clsx(style.sortIcon, {
-                active: order.field === "name",
-                orderASC: order.field === "name" && order.order === "ASC",
-              })}
-            />
-          }
-          onClick={() => handleClickTableHead("name")}
-        >
-          Bank name
-        </Button>
+        <TableHeadCell
+          order={order}
+          name="name"
+          label="Bank name"
+          onClick={handleClickTableHeadCell}
+        />
         <Box className={style.status}>
-          <Button
-            className={clsx(style.tableHead, {
-              active: order.field === "status",
-            })}
-            endIcon={
-              <ExpandMoreIcon
-                className={clsx(style.sortIcon, {
-                  active: order.field === "status",
-                  orderASC: order.field === "status" && order.order === "ASC",
-                })}
-              />
-            }
-            onClick={() => handleClickTableHead("status")}
-          >
-            Status
-          </Button>
+          <TableHeadCell
+            order={order}
+            name="status"
+            label="Status"
+            onClick={handleClickTableHeadCell}
+          />
           <Box width="48px" height="48px" marginRight="-12px" />
         </Box>
       </div>
@@ -63,11 +44,13 @@ function BankList({ data }) {
 }
 
 BankList.propTypes = {
-  data: Type.arrayOf({
-    id: Type.string.isRequired,
-    name: Type.string.isRequired,
-    isActive: Type.bool,
-  }),
+  data: Type.arrayOf(
+    Type.shape({
+      id: Type.string.isRequired,
+      name: Type.string.isRequired,
+      isActive: Type.bool,
+    })
+  ),
 };
 
 export default BankList;
