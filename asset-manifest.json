@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/transwap-coding-challenge/static/css/main.36c4d870.chunk.css",
+    "main.js": "/transwap-coding-challenge/static/js/main.4b7c02a7.chunk.js",
+    "main.js.map": "/transwap-coding-challenge/static/js/main.4b7c02a7.chunk.js.map",
+    "runtime-main.js": "/transwap-coding-challenge/static/js/runtime-main.39174d57.js",
+    "runtime-main.js.map": "/transwap-coding-challenge/static/js/runtime-main.39174d57.js.map",
+    "static/js/2.520b16ad.chunk.js": "/transwap-coding-challenge/static/js/2.520b16ad.chunk.js",
+    "static/js/2.520b16ad.chunk.js.map": "/transwap-coding-challenge/static/js/2.520b16ad.chunk.js.map",
+    "static/js/3.b9920b28.chunk.js": "/transwap-coding-challenge/static/js/3.b9920b28.chunk.js",
+    "static/js/3.b9920b28.chunk.js.map": "/transwap-coding-challenge/static/js/3.b9920b28.chunk.js.map",
+    "index.html": "/transwap-coding-challenge/index.html",
+    "static/css/main.36c4d870.chunk.css.map": "/transwap-coding-challenge/static/css/main.36c4d870.chunk.css.map",
+    "static/js/2.520b16ad.chunk.js.LICENSE.txt": "/transwap-coding-challenge/static/js/2.520b16ad.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.39174d57.js",
+    "static/js/2.520b16ad.chunk.js",
+    "static/css/main.36c4d870.chunk.css",
+    "static/js/main.4b7c02a7.chunk.js"
+  ]
+}
