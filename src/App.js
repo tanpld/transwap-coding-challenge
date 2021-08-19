@@ -1,4 +1,4 @@
-import CountrySelection from "./components/CountrySelection";
+import CountrySelection from "./components/country-selection/CountrySelection";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient({

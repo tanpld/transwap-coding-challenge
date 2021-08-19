@@ -1,20 +1,11 @@
-import React from "react";
-import Type from "prop-types";
-import clsx from "clsx";
 import {
   Accordion as MuiAccordion,
   AccordionSummary as MuiAccordionSummary,
   AccordionDetails as MuiAccordionDetails,
-  Typography,
-  Button,
 } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import CallIcon from "@material-ui/icons/Call";
-import { Skeleton } from "@material-ui/lab";
-import useGetBankDetails from "../queries/useGetBankDetails";
 
-const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles((theme) => ({
   root: {
     borderRadius: "8px",
     border: "0",
@@ -61,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Accordion = withStyles({
+export const StyledAccordion = withStyles({
   root: {
     border: 0,
     borderRadius: "8px",
@@ -85,7 +76,7 @@ const Accordion = withStyles({
   },
 })(MuiAccordion);
 
-const AccordionSummary = withStyles({
+export const StyledAccordionSummary = withStyles({
   root: {
     borderTopRightRadius: "8px",
     borderTopLeftRadius: "8px",
@@ -106,7 +97,7 @@ const AccordionSummary = withStyles({
   },
 })(MuiAccordionSummary);
 
-const AccordionDetails = withStyles({
+export const StyledAccordionDetails = withStyles({
   root: {
     marginTop: "4px",
     borderBottomRightRadius: "8px",
@@ -119,65 +110,3 @@ const AccordionDetails = withStyles({
     alignItems: "flex-start",
   },
 })(MuiAccordionDetails);
-
-function Bank(props) {
-  const { data } = props;
-  const { id, name, isActive } = data;
-  const style = useStyles();
-  const { data: bankDetails, isLoading } = useGetBankDetails(id);
-
-  return (
-    <>
-      {isLoading ? (
-        <Skeleton
-          variant="rect"
-          animation="pulse"
-          height={58}
-          style={{ borderRadius: "8px", marginBottom: "4px" }}
-        />
-      ) : (
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls={`${name}-content`}
-            id={`${name}-header`}
-          >
-            <div className={style.sumary}>
-              <Typography>{name}</Typography>
-              <span className={clsx(style.status, { active: isActive })}>
-                {isActive ? "Active" : "Inactive"}
-              </span>
-            </div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography className={style.bankName} variant="h5" component="h3">
-              {bankDetails?.name}
-            </Typography>
-            <img
-              className={style.bankLogo}
-              src={bankDetails?.logoUrl}
-              alt={`${bankDetails?.name}-logo`}
-            />
-            {bankDetails?.hotline && (
-              <Button startIcon={<CallIcon className={style.callIcon} />}>
-                <a href={`tel:${bankDetails.hotline}`}>
-                  <i>{bankDetails.hotline}</i>
-                </a>
-              </Button>
-            )}
-          </AccordionDetails>
-        </Accordion>
-      )}
-    </>
-  );
-}
-
-Bank.propsTypes = {
-  data: Type.shape({
-    id: Type.string.isRequired,
-    name: Type.string.isRequired,
-    isActive: Type.bool,
-  }),
-};
-
-export default Bank;

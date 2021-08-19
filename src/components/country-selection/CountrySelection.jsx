@@ -1,24 +1,10 @@
 import React, { useState } from "react";
 import { Container, Typography, Grid, Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import Country from "./Country";
-import BankList from "./BankList";
-import useGetCountries from "../queries/useGetCountries";
+import Country from "../country/Country";
+import BankList from "../bank-list/BankList";
+import useGetCountries from "../../queries/useGetCountries";
 import { Skeleton } from "@material-ui/lab";
-
-const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: "32px",
-    backgroundColor: "#F2F3FA",
-    [theme.breakpoints.down("xs")]: {
-      padding: "16px",
-    },
-  },
-  title: {
-    fontWeight: "bold",
-    marginBottom: "2rem",
-  },
-}));
+import useStyles from "./index.styles";
 
 function CountrySelection() {
   const style = useStyles();
@@ -43,14 +29,13 @@ function CountrySelection() {
           {isLoading && (
             <>
               {new Array(6).fill("country", 0, 6).map((item, index) => (
-                <Grid
-                  item
-                  xs={12}
-                  sm={6}
-                  md={4}
-                  key={`${item}-${index}`}
-                >
-                  <Skeleton variant="rect" animation="pulse" height={222} style={{ borderRadius: '8px'}} />
+                <Grid item xs={12} sm={6} md={4} key={`${item}-${index}`}>
+                  <Skeleton
+                    variant="rect"
+                    animation="pulse"
+                    height={222}
+                    style={{ borderRadius: "8px" }}
+                  />
                 </Grid>
               ))}
             </>
